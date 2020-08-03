@@ -96,6 +96,35 @@
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
+/datum/quirk/multilingual
+	name = "Multilingual"
+	desc = "You spent a portion of your life learning to understand an additional language. You may or may not be able to speak it based on your anatomy."
+	value = 2
+	mob_trait = TRAIT_MULTILINGUAL
+	gain_text = "<span class='notice'>You have learned to understand an additional language.</span>"
+	lose_text = "<span class='danger'>You have forgotten how to understand a language.</span>"
+
+/datum/quirk/multilingual/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	if(H.job != "Curator")
+		H.grant_all_languages(TRUE, TRUE, FALSE, LANGUAGE_MULTILINGUAL)
+		H.add_blocked_language(/datum/language/narsie, LANGUAGE_MULTILINGUAL)
+		H.add_blocked_language(/datum/language/ratvar, LANGUAGE_MULTILINGUAL)
+		H.add_blocked_language(/datum/language/codespeak, LANGUAGE_MULTILINGUAL)
+		var/datum/language/random_language = H.get_random_spoken_language()
+		H.remove_blocked_language(/datum/language/narsie, LANGUAGE_MULTILINGUAL)
+		H.remove_blocked_language(/datum/language/ratvar, LANGUAGE_MULTILINGUAL)
+		H.remove_blocked_language(/datum/language/codespeak, LANGUAGE_MULTILINGUAL)
+		H.remove_all_languages(LANGUAGE_MULTILINGUAL, FALSE)
+		H.grant_language(random_language, TRUE, TRUE, LANGUAGE_MULTILINGUAL)
+	else
+		return
+
+/datum/quirk/multilingual/remove()
+	if(quirk_holder)
+		var/mob/living/carbon/human/H = quirk_holder
+		H.remove_all_languages(LANGUAGE_MULTILINGUAL, FALSE)
+
 /datum/quirk/night_vision
 	name = "Night Vision"
 	desc = "You can see slightly more clearly in full darkness than most people."
