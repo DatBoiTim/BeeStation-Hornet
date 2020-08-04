@@ -107,15 +107,12 @@
 /datum/quirk/multilingual/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	if(H.job != "Curator")
-		H.grant_all_languages(TRUE, TRUE, FALSE, LANGUAGE_MULTILINGUAL)
-		H.add_blocked_language(/datum/language/narsie, LANGUAGE_MULTILINGUAL)
-		H.add_blocked_language(/datum/language/ratvar, LANGUAGE_MULTILINGUAL)
-		H.add_blocked_language(/datum/language/codespeak, LANGUAGE_MULTILINGUAL)
-		var/datum/language/random_language = H.get_random_spoken_language()
-		H.remove_blocked_language(/datum/language/narsie, LANGUAGE_MULTILINGUAL)
-		H.remove_blocked_language(/datum/language/ratvar, LANGUAGE_MULTILINGUAL)
-		H.remove_blocked_language(/datum/language/codespeak, LANGUAGE_MULTILINGUAL)
-		H.remove_all_languages(LANGUAGE_MULTILINGUAL, FALSE)
+		var/obj/item/organ/tongue/T = H.getorganslot(ORGAN_SLOT_TONGUE)
+		var/list/languages_possible = T.languages_possible
+		languages_possible = languages_possible - typecacheof(/datum/language/common) - typecacheof(/datum/language/uncommon) - typecacheof(/datum/language/codespeak) - typecacheof(/datum/language/narsie) - typecacheof(/datum/language/ratvar)
+		var/datum/language/random_language = pick(languages_possible)
+		while(random_language == H.can_speak_language(random_language))
+			random_language = pick(languages_possible)
 		H.grant_language(random_language, TRUE, TRUE, LANGUAGE_MULTILINGUAL)
 	else
 		return
