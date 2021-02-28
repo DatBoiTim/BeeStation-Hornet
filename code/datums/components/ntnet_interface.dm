@@ -59,8 +59,3 @@
 	for(var/i in networks_connected_by_id)
 		unregister_connection(networks_connected_by_id[i])
 	return TRUE
-
-/datum/component/ntnet_interface/proc/unregister_connection(datum/ntnet/net)
-	net.interface_disconnect(src)
-	networks_connected_by_id -= net.network_id
-	return TRUE
