@@ -13,14 +13,14 @@
 * helperprocs
 */
 
-/datum/component/datagram //Basically IPv4 Datagram just really stripped down to the essentials
+/datum/component/packet //Basically IPv4 Datagram just really stripped down to the essentials
 	var/datum/component/address/S //Source Address
 	var/datum/component/address/D //Destination
 	var/list/data = list( //All Placeholder for now. Will revisit when everything exists
-		"flags", //Flags for delivery
-		"protocol", //Determines Protocol
-		"type", //Data Type from Protocol
-		"data" //The actual data itself
+		data["flags"], //Flags for delivery - Test Value
+		data["protocol"], //Determines Protocol - Test Value
+		data["type"], //Data Type from Protocol
+		data["data"]//The actual data itself
 	)
 
 /*

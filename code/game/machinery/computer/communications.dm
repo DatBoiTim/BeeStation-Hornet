@@ -736,7 +736,10 @@
 
 	frequency.post_signal(src, status_signal)
 
-
+/obj/machinery/test_sender
+	datum/interface/wirelessInterface
+	var/dst_addy
+	var/packet_data
 /obj/machinery/computer/communications/Destroy()
 	GLOB.shuttle_caller_list -= src
 	SSshuttle.autoEvac()
