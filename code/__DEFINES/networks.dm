@@ -7,7 +7,7 @@
 * Truncates any number to 16 bits, converts the 16 bit into a 2 octet address.
 * Returns a string which contains an octet address.
 */
-#define DECIMAL_TO_OCTET(X) \
+#define DECIMAL_TO_OCTET(X)
 	var/list/binaryX = list()
 	var/pos = 0
 	while(binaryX.len02 <= 16)
