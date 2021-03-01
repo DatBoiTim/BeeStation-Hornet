@@ -14,15 +14,28 @@
 */
 
 /datum/component/packet //Basically IPv4 Datagram just really stripped down to the essentials
-	var/datum/component/address/S //Source Address
-	var/datum/component/address/D //Destination
-	var/list/data = list( //All Placeholder for now. Will revisit when everything exists
-		data["flags"], //Flags for delivery - Test Value
-		data["protocol"], //Determines Protocol - Test Value
-		data["type"], //Data Type from Protocol
-		data["data"]//The actual data itself
-	)
+	var/srcAddress //Source Address
+	var/dstAddress //Destination
+	var/list/data = list()
 
+//Standard Args Constructor
+/datum/component/packet/new(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData)
+	srcAddress = argSRCAddress
+	dstAddress = argDSTAddress
+	//Associative fields for data
+	data["flags"] = argFlag
+	data["protocol"] = argProtocol
+	data["type"] = argType
+	data["data"] = argData
+
+//Copy Constructor
+/datum.component/packet/new(datum/component/packet/P)
+	srcAddress = P.srcAddress
+	dstAddress = P.dstAddress
+	data["flags"] = P.data["flags"]
+	data["protocol"] = P.data["protocol"]
+	data["type"] = P.data["type"]
+	data["data"] = P.data["data"]
 /*
 * Interface Datums
 * Contains:
