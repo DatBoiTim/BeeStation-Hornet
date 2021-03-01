@@ -24,7 +24,7 @@
 	var/list/binaryOctet2 = list()
 	var/i
 	for(i=1, i<= binaryX.len, i++)
-		if(pos < (binaryX.len)/2)
+		if(pos <= (binaryX.len)/2)
 			binaryOctet1 + binaryX[i]
 		else
 			binaryOctet2 + binaryX[i]
