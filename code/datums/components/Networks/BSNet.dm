@@ -35,7 +35,7 @@
 
 /datum/component/interface //Parent Class for Interfaces
 	var/obj/connectedDevice //The Device which the interface is attached to
-	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid
+	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
 
 /datum/component/interface/wired
 	var/datum/powernet/P //Powernet Connected. We all love PoE, it's time for EoP
