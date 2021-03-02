@@ -29,7 +29,7 @@
 	data["data"] = argData
 
 //Copy Constructor
-/datum.component/packet/new(datum/component/packet/P)
+/datum/packet/new(datum/component/packet/P)
 	srcAddress = P.srcAddress
 	dstAddress = P.dstAddress
 	data["flags"] = P.data["flags"]
