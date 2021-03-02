@@ -13,13 +13,13 @@
 * helperprocs
 */
 
-/datum/component/packet //Basically IPv4 Datagram just really stripped down to the essentials
+/datum/packet //Basically IPv4 Datagram just really stripped down to the essentials
 	var/srcAddress //Source Address
 	var/dstAddress //Destination
 	var/list/data = list()
 
 //Standard Args Constructor
-/datum/component/packet/new(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData)
+/datum/packet/new(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData)
 	srcAddress = argSRCAddress
 	dstAddress = argDSTAddress
 	//Associative fields for data
