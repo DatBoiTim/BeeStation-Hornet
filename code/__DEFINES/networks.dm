@@ -38,5 +38,10 @@
 		if(binaryOctet2[i]==1)
 			var/powerOf2 = 8-i
 			octet2Decimal += 2**powerOf2
-	var/addressOctetForm = num2text(octet1Decimal) + "." + num2text(octet2Decimal)
+	var/addressOctetForm = ""
+	var/octet1 = ""
+	var/octet2 = ""
+	octet1 = num2text(octet1Decimal)
+	octet2 = num2text(octet2decimal)
+	addressOctetForm = octet1 + "." + octet2
 	return addressOctetForm
