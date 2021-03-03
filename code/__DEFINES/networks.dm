@@ -29,7 +29,7 @@
 	var/pos = 1;\
 	var/list/binaryX = list();\ //List which is the 16 binary form of x
 	while(binaryX.length <= 16) {\ //Populating the list binaryX. Decimal to Binary Conversion
-		if(x%2 == 0){\
+		if(x%2 == 0) {\
 			binaryX[pos] = 0;\
 			x = x / 2;\
 			pos++;\
