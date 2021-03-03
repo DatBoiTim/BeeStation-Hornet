@@ -19,7 +19,7 @@
 	var/list/data = list()
 
 //Standard Args Constructor
-/datum/packet/new(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData)
+/datum/packet/New(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData)
 	srcAddress = argSRCAddress
 	dstAddress = argDSTAddress
 	//Associative fields for data
@@ -29,7 +29,7 @@
 	data["data"] = argData
 
 //Copy Constructor
-/datum/packet/new(datum/component/packet/P)
+/datum/packet/New(datum/packet/P)
 	srcAddress = P.srcAddress
 	dstAddress = P.dstAddress
 	data["flags"] = P.data["flags"]
@@ -46,14 +46,21 @@
 * helperprocs
 */
 
-/datum//interface //Parent Class for Interfaces
+/datum/interface //Parent Class for Interfaces
 	var/obj/connectedDevice //The Device which the interface is attached to
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
 
+/datum/interface/New(/obj/D, addy)
+	connectedDevice = D
+	address = addy
+
 /datum/interface/wired
-	var/datum/powernet/P //Powernet Connected. We all love PoE, it's time for EoP
+	var/datum/powernet/powernet //Powernet Connected. We all love PoE, it's time for EoP
 
-
+//Standard Args Constructor
+/datum/interface/wired/New(/datum/powernet/P, /obj/D, addy)
+	powernet = P
+	..(D, addy)
 
 /datum/interface/wireless
 	var/datum/radio_frequency/radio_connection

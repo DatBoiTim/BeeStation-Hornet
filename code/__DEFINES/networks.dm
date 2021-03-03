@@ -13,7 +13,7 @@
 	while(binaryX.len02 <= 16)
 		if(X%2 == 0)
 			binaryX[pos] = 0
-			X/=2
+			X = X / 2
 			pos++
 		else
 			binaryX[pos] = 0
