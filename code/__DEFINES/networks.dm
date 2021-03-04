@@ -72,4 +72,4 @@
 	__OCTET1 += num2text(__DECIMALOCTET1);\
 	__OCTET2 += num2text(__DECIMALOCTET2);\
 	__ADDRESSOCTETFORM = __OCTET1 + "." + __OCTET2;\
-	return __ADDRESSOCTETFORM;
+	return __ADDRESSOCTETFORM;\
