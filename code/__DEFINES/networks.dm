@@ -26,49 +26,50 @@
 * 		No: Iterate
 */
 #define DECIMAL_ADDRESS_TO_OCTET_FORMAT(x) \
-	var/pos = 1;\
-	var/list/binaryX = list();\ //List which is the 16 binary form of x
-	while(binaryX.length <= 16) {\ //Populating the list binaryX. Decimal to Binary Conversion
+	var/__POS = 1;\
+	var/list/__BINARYX = list();\ //List which is the 16 binary form of x
+	while(__BINARYX.len <= 16) {\ //Populating the list binaryX. Decimal to Binary Conversion
 		if(x%2 == 0) {\
-			binaryX[pos] = 0;\
+			__BINARYX[__POS] = 0;\
 			x = x / 2;\
-			pos++;\
+			__POS++;\
 		} else {\
-			binaryX[pos] = 1;\
+			__BINARYX[__POS] = 1;\
 			x = x / 2;\
 			x = round(x);\ //Truncates X to an everything before a decimal place
+			__POS++;\
 		};\
 	};\
-	var/list/binaryOctet1 = list();\
-	var/list/binaryOctet2 = list();\
-	var/i;\
-	pos = 1;\ //Resetting pos for iterating population of binaryOctet2
-	for(i=1, i <= binaryX.len, i++){\ //Split to Octets
-		if(i <= (binaryX.len) / 2) {\
-			binaryOctet1[i] = binaryX[i];\
+	var/list/__BINARYOCTET1 = list();\
+	var/list/__BINARYOCTET2 = list();\
+	var/__I;\
+	__POS = 1;\ //Resetting pos for iterating population of binaryOctet2
+	for(__I = 1, __I <= __BINARYX.len, __I++) {\ //Split to Octets
+		if(__I <= (__BINARYX.len) / 2) {\
+			__BINARYOCTET1[__I] = __BINARYX[__I];\
 		} else {\
-			binaryOctet2[pos] = binaryX[i];\
-			pos++;\
+			__BINARYOCTET2[__POS] = __BINARYX[__I];\
+			__POS++;\
 		};\
 	};\
-	var/decimalOctet1 = 0;\
-	var/decimalOctet2 = 0;\
-	for(i = 1, i <= binaryOctet1.len, i++) {\ //Binary To Decimal
-		if(binaryOctet1[i] == 1) {\
-			var/powerOf2 = 8 - i;\
-			decimalOctet1 += 2**powerOf2;\
+	var/__DECIMALOCTET1 = 0;\
+	var/__DECIMALOCTET2 = 0;\
+	for(__I = 1, __I <= __BINARYOCTET1.len, __I++) {\ //Binary To Decimal
+		if(__BINARYOCTET1[__I] == 1) {\
+			var/__POWEROF2 = 8 - __I;\
+			__DECIMALOCTET1 += 2**__POWEROF2;\
 		};\
 	};\
-	for(i=1, i <= binaryOctet2.len, i++) {
-		if(binaryOctet2[i] == 1) {\
-			var/powerOf2 = 8 -1;\
-			decimalOctet2 += 2**powerOf2;\
+	for(__I = 1, __I <= __BINARYOCTET2.len, __I++) {
+		if(__BINARYOCTET2[__I] == 1) {\
+			var/__POWEROF2 = 8 -__I;\
+			__DECIMALOCTET2 += 2**__POWEROF2;\
 		};\
 	};\
-	var/addressDecimalForm = "";\
-	var/octet1 = "";\
-	var/octet2 = "";\
-	octet1 += num2text(decimalOctet1);\
-	octet2 += num2text(decimalOctet2);\
-	addressDecimalForm = octet1 + "." + octet2;\
-	return addressDecimalForm;\
+	var/__ADDRESSOCTETFORM = "";\
+	var/__OCTET1 = "";\
+	var/__OCTET2 = "";\
+	__OCTET1 += num2text(__DECIMALOCTET1);\
+	__OCTET2 += num2text(__DECIMALOCTET2);\
+	__ADDRESSOCTETFORM = __OCTET1 + "." + __OCTET2;\
+	return __ADDRESSOCTETFORM;
