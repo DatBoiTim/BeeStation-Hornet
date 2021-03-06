@@ -64,8 +64,8 @@
 	..(D, addy)
 
 //Connects Connected Device to the Powernet
-/datum/component/interface/wired/connect_to_network()
-	var/turf/T = src.loc
+/datum/component/interface/wired/proc/connect_to_network()
+	var/turf/T = connectedDevice.loc
 	if(!T || !istype(T))
 		return FALSE
 
@@ -76,7 +76,7 @@
 	C.powernet.add_machine(src)
 	return TRUE
 
-/datum/component/interface/wired/disconnect_from_network()
+/datum/component/interface/wired/proc/disconnect_from_network()
 	if(!powernet)
 		return 0 //No Powernet Connected
 	powernet.remove_interface(src)
