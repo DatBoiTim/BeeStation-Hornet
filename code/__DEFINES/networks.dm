@@ -2,41 +2,18 @@
 
 #define NETWORK_BROADCAST_ID "ALL"
 
-/*
-* A Macro to convert X as a decimal BSNet Address to the octet format many are familiar with
-* Truncates any number to 16 bits, converts the 16 bit into a 2 octet address.
-* Returns a string which contains an octet address.
-*
-* Binary Conversion:
-*	Check if Number is perfectly divisible by 2;
-*	Yes: Write 0 to array @ bit position, divide x by 2, iterate bit position;
-*	No: Write 1 to array @ bit position, divide x by 2, truncate x to integer, iterate bit position;
-*	End: 16 bits written to array;
-*
-* Split to Octets:
-* 	For each bit;
-* 		Check if position of bit is in first octet;
-*		Yes: Write bit to first octet, iterate
-*		No: Write bit to second octet, iterate
-*
-* Binary to Decimal:
-* 	For each bit;
-*		Check if bit is equal to 1;
-* 		Yes: Calculate power of 2 from bit position, raise 2 to powerOf2, add to decimalOctet, iterate
-* 		No: Iterate
-*/
-#define DECIMAL_ADDRESS_TO_OCTET_FORMAT(x) \
+#define DECIMAL_ADDRESS_TO_OCTET_FORMAT(X) \
 	var/__POS = 1;\
 	var/list/__BINARYX = list();\ //List which is the 16 binary form of x
 	while(__BINARYX.len <= 16) {\ //Populating the list binaryX. Decimal to Binary Conversion
-		if(x%2 == 0) {\
+		if(X%2 == 0) {\
 			__BINARYX[__POS] = 0;\
-			x = x / 2;\
+			X = X / 2;\
 			__POS++;\
 		} else {\
 			__BINARYX[__POS] = 1;\
-			x = x / 2;\
-			x = round(x);\ //Truncates X to an everything before a decimal place
+			X = X / 2;\
+			X = round(X);\ //Truncates X to an everything before a decimal place
 			__POS++;\
 		};\
 	};\
