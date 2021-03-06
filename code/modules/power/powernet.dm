@@ -6,7 +6,13 @@
 	var/number					// unique id
 	var/list/cables = list()	// all cables & junctions
 	var/list/nodes = list()		// all connected machines
-	var/list/interfaces = list() //BSNet Interfaces on the Powernet. Helps ensure that A) Interfaces are connected rather than the device. B) That packets aren't getting sent 
+	var/list/interfaces = list()
+	/*
+	* A List of all connected BSNet Wired Interfaces on the Powernet
+	* Ensures 2 things:
+	* A) Interfaces themselves are what are connected to the network, as opposed to the device
+	* B) Random Machines on the powernet won't be counted for.
+	*/
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
