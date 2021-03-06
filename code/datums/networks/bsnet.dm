@@ -46,7 +46,7 @@
 * helperprocs
 */
 
-/datum/interface //Parent Class for Interfaces
+/datum/component/interface //Parent Class for Interfaces
 	var/obj/connectedDevice //The Device which the interface is attached to
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
 
