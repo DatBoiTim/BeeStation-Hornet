@@ -83,13 +83,14 @@
 #define FREQ_LOCATOR_IMPLANT 1451
 #define FREQ_SIGNALER 1457  //! the default for new signalers
 #define FREQ_COMMON 1459  //! Common comms frequency, dark green
+#define FREQ_BSNET 1461 //BSNet Wireless Communications.
 
 #define MAX_FREQ 1489 // ------------------------------------------------------
 
 #define MAX_FREE_FREQ 1599 // -------------------------------------------------
 
 // Transmission types.
-#define TRANSMISSION_WIRE 0  //! some sort of wired connection, not used
+#define TRANSMISSION_WIRE 0  //! some sort of wired connection, used by BSNet EoP
 #define TRANSMISSION_RADIO 1  //! electromagnetic radiation (default)
 #define TRANSMISSION_SUBSPACE 2  //! subspace transmission (headsets only)
 #define TRANSMISSION_SUPERSPACE 3  //! reaches independent (CentCom) radios only

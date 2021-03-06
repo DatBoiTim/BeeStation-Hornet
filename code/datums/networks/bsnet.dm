@@ -63,6 +63,25 @@
 	powernet = P
 	..(D, addy)
 
+//Connects Connected Device to the Powernet
+/datum/component/interface/wired/connect_to_network()
+	var/turf/T = src.loc
+	if(!T || !istype(T))
+		return FALSE
+
+	var/obj/structure/cable/C = T.get_cable_node()
+	if(!C || !C.powernet)
+		return FALSE
+
+	C.powernet.add_machine(src)
+	return TRUE
+
+/datum/component/interface/wired/disconnect_from_network()
+	if(!powernet)
+		return 0 //No Powernet Connected
+	powernet.remove_interface(src)
+	return 1 //Powernet Successfully Disconnected
+
 /datum/component/interface/wireless
 	var/datum/radio_frequency/radio_connection
 

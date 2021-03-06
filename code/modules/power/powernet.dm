@@ -6,6 +6,7 @@
 	var/number					// unique id
 	var/list/cables = list()	// all cables & junctions
 	var/list/nodes = list()		// all connected machines
+	var/list/interfaces = list() //BSNet Interfaces on the Powernet. Helps ensure that A) Interfaces are connected rather than the device. B) That packets aren't getting sent 
 
 	var/load = 0				// the current load on the powernet, increased by each machine at processing
 	var/newavail = 0			// what available power was gathered last tick, then becomes...
@@ -31,7 +32,7 @@
 	return ..()
 
 /datum/powernet/proc/is_empty()
-	return !cables.len && !nodes.len
+	return !cables.len && !nodes.len && !interfaces.len
 
 //remove a cable from the current powernet
 //if the powernet is then empty, delete it
@@ -73,6 +74,21 @@
 			M.disconnect_from_network()//..remove it
 	M.powernet = src
 	nodes[M] = M
+
+/datum/powernet/proc/remove_interface(datum/component/interface/wired/I)
+	interfaces -= I
+	I.powernet = null
+	if(is_empty())
+		qdel(src)
+
+/datum/powernet/proc/add_interfaces(datum/component/interface/wired/I)
+	if(I.powernet)
+		if(I.powernet == src)
+			return
+		else
+			I.disconnect_from_network()
+	I.powernet = src
+	interfaces[I] = I
 
 //handles the power changes in the powernet
 //called every ticks by the powernet controller

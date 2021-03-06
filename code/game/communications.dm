@@ -44,7 +44,6 @@
       parameters:
         signal - see description below. Extract all needed data from the signal before doing sleep(), spawn() or return!
         receive_method - may be TRANSMISSION_WIRE or TRANSMISSION_RADIO.
-          TRANSMISSION_WIRE is currently unused.
         receive_param - for TRANSMISSION_RADIO here comes frequency.
 
   datum/signal
