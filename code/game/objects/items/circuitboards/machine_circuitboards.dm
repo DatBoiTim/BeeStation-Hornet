@@ -214,14 +214,6 @@
 	build_path = /obj/machinery/power/generator
 	req_components = list()
 
-/obj/item/circuitboard/machine/ntnet_relay
-	name = "NTNet relay (Machine Board)"
-	icon_state = "engineering"
-	build_path = /obj/machinery/ntnet_relay
-	req_components = list(
-		/obj/item/stack/cable_coil = 2,
-		/obj/item/stock_parts/subspace/filter = 1)
-
 /obj/item/circuitboard/machine/pacman
 	name = "PACMAN-type generator (Machine Board)"
 	icon_state = "engineering"

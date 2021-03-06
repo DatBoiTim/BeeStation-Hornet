@@ -50,17 +50,23 @@
 	var/obj/connectedDevice //The Device which the interface is attached to
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
 
-/datum/interface/New(obj/D, addy)
+//Standard Args Constructor
+/datum/component/interface/New(obj/D, addy)
 	connectedDevice = D
 	address = addy
 
-/datum/interface/wired
+/datum/component/interface/wired
 	var/datum/powernet/powernet //Powernet Connected. We all love PoE, it's time for EoP
 
 //Standard Args Constructor
-/datum/interface/wired/New(datum/powernet/P, obj/D, addy)
+/datum/component/interface/wired/New(datum/powernet/P, obj/D, addy)
 	powernet = P
 	..(D, addy)
 
-/datum/interface/wireless
+/datum/component/interface/wireless
 	var/datum/radio_frequency/radio_connection
+
+//Standard Args Constructor
+/datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
+	radio_connection = R
+	..(D, addy)

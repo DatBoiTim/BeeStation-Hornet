@@ -18,7 +18,7 @@
 /obj/item/door_remote/Initialize()
 	. = ..()
 	access_list = get_region_accesses(region_access)
-	AddComponent(/datum/component/ntnet_interface)
+	AddComponent(/datum/component/interface/wireless)
 
 /obj/item/door_remote/attack_self(mob/user)
 	switch(mode)
