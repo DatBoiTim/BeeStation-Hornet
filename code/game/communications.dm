@@ -187,14 +187,15 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 /obj/proc/receive_signal(datum/signal/signal)
 	return
 
+/datum/component/receive_signal(datum/signal/signal)
+	return
+
 /datum/signal
 	var/obj/source
 	var/frequency = 0
 	var/transmission_method
 	var/list/data
 
-/datum/signal/New(data, transmission_method, datum/packet/P) //Transmission Method as NUM
+/datum/signal/New(data, transmission_method) //Transmission Method as NUM
 	src.data = data || list()
 	src.transmission_method = transmission_method
-	if(P)
-		P = data["packet"]

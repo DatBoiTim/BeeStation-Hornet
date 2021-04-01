@@ -46,22 +46,40 @@
 * helperprocs
 */
 
-/datum/component/interface //Parent Class for Interfaces
+/datum/component/interface //Parent Class for Interfaces. Despite identical fields, this is a non-functional interface due to inheritance reasons
 	var/obj/connectedDevice //The Device which the interface is attached to
+	var/datum/radio_frequency/RF //Apparently this needs to exist for all, I just have to determine the transmission media
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
 
 //Standard Args Constructor
-/datum/component/interface/New(obj/D, addy)
+/datum/component/interface/New(obj/D, datum/radio_frequency/R, addy)
 	connectedDevice = D
+	RF = R
 	address = addy
 
+//Send Signal
+/*
+* Constructs a Packet, Packages Packet in a Signal, Posts the Signal
+*/
+/datum/component/interface/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=1, range=-1)
+	var/datum/packet/P = new(address, destination, packFlag, packProtocol, packType, packData)
+	var/datum/signal/S = new(P, signalTranMethod)
+	RF.post_signal(connectedDevice, S, null, range)
+
+/datum/component/interface/proc/recieve_signal(datum/signal/S)
+	var/datum/packet/P
+	if(istype(S.data, /datum/packet))
+		P = S.data
+		//Print to Console Here
+	else
+		return FALSE
 /datum/component/interface/wired
 	var/datum/powernet/powernet //Powernet Connected. We all love PoE, it's time for EoP
 
 //Standard Args Constructor
-/datum/component/interface/wired/New(datum/powernet/P, obj/D, addy)
+/datum/component/interface/wired/New(datum/powernet/P, obj/D, datum/radio_frequency/R,addy)
 	powernet = P
-	..(D, addy)
+	..(D, R,addy)
 
 //Connects Connected Device to the Powernet
 /datum/component/interface/wired/proc/connect_to_network()
@@ -82,8 +100,7 @@
 	powernet.remove_interface(src)
 	return 1 //Powernet Successfully Disconnected
 
-/datum/component/interface/wireless
-	var/datum/radio_frequency/radio_connection
+/datum/component/interface/wireless //Same Fields But Actually Functional
 
 //Standard Args Constructor
 /datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
