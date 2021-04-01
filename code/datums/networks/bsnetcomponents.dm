@@ -88,4 +88,10 @@
 //Standard Args Constructor
 /datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
 	radio_connection = R
+	SSradio.add_object(src, radio_connection)
 	..(D, addy)
+
+/datum/component/interface/wireless/change_freq(/datum/radio_frequency/N)
+	SSradio.remove_object(src, radio_connection)
+	radio_connection = N
+	SSradio.add_object(src, radio_connection)
