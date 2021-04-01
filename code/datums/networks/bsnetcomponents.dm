@@ -55,6 +55,7 @@
 /datum/component/interface/New(obj/D, datum/radio_frequency/R, addy)
 	connectedDevice = D
 	RF = R
+	SSradio.add_object(src, RF)
 	address = addy
 
 //Send Signal
@@ -64,7 +65,7 @@
 /datum/component/interface/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=1, range=-1)
 	var/datum/packet/P = new(address, destination, packFlag, packProtocol, packType, packData)
 	var/datum/signal/S = new(P, signalTranMethod)
-	RF.post_signal(connectedDevice, S, null, range)
+	RF.post_signal(src, S, null, range)
 
 /datum/component/interface/proc/recieve_signal(datum/signal/S)
 	var/datum/packet/P
@@ -73,6 +74,7 @@
 		//Print to Console Here
 	else
 		return FALSE
+
 /datum/component/interface/wired
 	var/datum/powernet/powernet //Powernet Connected. We all love PoE, it's time for EoP
 
@@ -104,11 +106,9 @@
 
 //Standard Args Constructor
 /datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
-	radio_connection = R
-	SSradio.add_object(src, radio_connection)
-	..(D, addy)
+	..(D, R, addy)
 
 /datum/component/interface/wireless/change_freq(/datum/radio_frequency/N)
-	SSradio.remove_object(src, radio_connection)
+	SSradio.remove_object(src, RF)
 	radio_connection = N
-	SSradio.add_object(src, radio_connection)
+	SSradio.add_object(src, RF)

@@ -164,6 +164,40 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 					continue
 			device.receive_signal(signal)
 
+/datum/radio_frequency/proc/post_signal(datum/component/interface/I, datum/signal/signal, filter = null as text|null, range = null as num|null)
+	// Ensure the signal's data is fully filled
+	signal.source = I
+	signal.frequency = frequency
+
+	//Apply filter to the signal. If none supply, broadcast to every devices
+	//_default channel is always checked
+	var/list/filter_list
+
+	if(filter)
+		filter_list = list(filter,"_default")
+	else
+		filter_list = devices
+
+	//If checking range, find the source turf
+	var/turf/start_point
+	if(range)
+		start_point = get_turf(I.connectedDevice)
+		if(!start_point)
+			return 0
+
+	//Send the data
+	for(var/current_filter in filter_list)
+		for(var/obj/device in devices[current_filter])
+			if(device == I.connectedDevice)
+				continue
+			if(range)
+				var/turf/end_point = get_turf(device)
+				if(!end_point)
+					continue
+				if(start_point.z != end_point.z || (range > 0 && get_dist(start_point, end_point) > range))
+					continue
+			device.receive_signal(signal)
+
 /datum/radio_frequency/proc/add_listener(obj/device, filter as text|null)
 	if (!filter)
 		filter = "_default"
@@ -173,6 +207,14 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		devices[filter] = devices_line = list()
 	devices_line += device
 
+/datum/radio_frequency/proc/add_listener(datum/component/interface, filter as text|null)
+	if (!filter)
+		filter = "_default"
+
+	var/list/devices_line = devices[filter]
+	if(!devices_line)
+		devices[filter] = devices_line = list()
+	devices_line += device
 
 /datum/radio_frequency/proc/remove_listener(obj/device)
 	for(var/devices_filter in devices)
