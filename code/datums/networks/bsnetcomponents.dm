@@ -72,6 +72,8 @@
 	if(istype(S.data, /datum/packet))
 		P = S.data
 		world.log<<"Packet Recieved"
+	if(P.dstAddress == src.address || P.dstAddress == NETWORK_BROADCAST_ID) //This is where we will pass the packet up to the device
+		return P
 	else
 		return FALSE
 
