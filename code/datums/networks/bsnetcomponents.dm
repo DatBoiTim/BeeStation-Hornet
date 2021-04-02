@@ -105,8 +105,14 @@
 	return 1 //Powernet Successfully Disconnected
 
 /datum/component/interface/wired/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=0, range=-1)
-	if(src.powernet)
+	if(src.powernet) //Is it plugged in?
 		..(destination, packFlag, packProtocol, packType, packData, signalTranMethod, range)
+	else
+		return FALSE
+
+/datum/component/interface/wired/proc/recieve_radio_signal(datum/signal/S)
+	if(src.powernet) //Is it plugged in?
+		..(S)
 	else
 		return FALSE
 
