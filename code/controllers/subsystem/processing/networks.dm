@@ -36,13 +36,13 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/interface/D)
 	interfaces_by_id -= D.address
 	return TRUE
-/datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/ntnet_interface/D)
+/datum/controller/subsystem/processing/networks/proc/register_ntnetinterface(datum/component/ntnet_interface/D)
 	if(!interfaces_by_id[D.hardware_id])
 		interfaces_by_id[D.hardware_id] = D
 		return TRUE
 	return FALSE
 
-/datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/ntnet_interface/D)
+/datum/controller/subsystem/processing/networks/proc/unregister_ntnetinterface(datum/component/ntnet_interface/D)
 	interfaces_by_id -= D.hardware_id
 	return TRUE
 
