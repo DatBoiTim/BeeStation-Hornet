@@ -34,8 +34,9 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	return FALSE
 
 /datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/interface/D)
-	interfaces_by_id -= D.address
-	return TRUE
+	interfaces_by_address -= D.address
+	return
+
 /datum/controller/subsystem/processing/networks/proc/register_ntnetinterface(datum/component/ntnet_interface/D)
 	if(!interfaces_by_id[D.hardware_id])
 		interfaces_by_id[D.hardware_id] = D
