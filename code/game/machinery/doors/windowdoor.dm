@@ -38,7 +38,7 @@
 
 /obj/machinery/door/window/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/interface/wireless)
+	AddComponent(/datum/component/ntnet_interface)
 
 /obj/machinery/door/window/Destroy()
 	density = FALSE

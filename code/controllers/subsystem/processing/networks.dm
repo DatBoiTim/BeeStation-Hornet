@@ -9,6 +9,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	var/assignment_hardware_id = HID_RESTRICTED_END
 	var/list/networks_by_id = list()				//id = network
 	var/list/interfaces_by_address = list()				//hardware id = component interface
+	var/list/interfaces_by_id = list()				//hardware id = component interface
 	var/resolve_collisions = TRUE
 
 /datum/controller/subsystem/processing/networks/Initialize()
@@ -27,13 +28,23 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	return TRUE
 
 /datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/interface/D)
-	if(!interfaces_by_address[D.hardware_id])
-		interfaces_by_address[D.hardware_id] = D
+	if(!interfaces_by_address[D.address])
+		interfaces_by_address[D.address] = D
 		return TRUE
 	return FALSE
 
 /datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/interface/D)
-	interfaces_by_id -= D.address
+	interfaces_by_address -= D.address
+	return
+
+/datum/controller/subsystem/processing/networks/proc/register_ntnetinterface(datum/component/ntnet_interface/D)
+	if(!interfaces_by_id[D.hardware_id])
+		interfaces_by_id[D.hardware_id] = D
+		return TRUE
+	return FALSE
+
+/datum/controller/subsystem/processing/networks/proc/unregister_ntnetinterface(datum/component/ntnet_interface/D)
+	interfaces_by_id -= D.hardware_id
 	return TRUE
 
 /datum/controller/subsystem/processing/networks/proc/get_next_HID()
@@ -49,3 +60,13 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	. = "[copytext_char(hex, 1, 9)]"		//16 ^ 8 possibilities I think.
 	if(interfaces_by_address[.])
 		return resolve_collisions? make_address("[num2text(rand(ADDRESS_RESTRICTED_FLOOR, 65535), 12)]"):null
+
+/datum/controller/subsystem/processing/networks/proc/make_HID(string)
+	if(!string)
+		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999), 12)]"):null
+	var/hex = rustg_hash_string(RUSTG_HASH_MD5, string)
+	if(!hex)
+		return		//errored
+	. = "[copytext_char(hex, 1, 9)]"		//16 ^ 8 possibilities I think.
+	if(interfaces_by_id[.])
+		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999), 12)]"):null
