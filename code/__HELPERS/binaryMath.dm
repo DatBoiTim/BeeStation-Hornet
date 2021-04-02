@@ -23,7 +23,7 @@
 * 		Yes: Calculate power of 2 from bit position, raise 2 to powerOf2, add to decimalOctet, iterate
 * 		No: Iterate
 */
-proc/decimal_address_to_octet_format(x)
+/proc/decimal_address_to_octet_format(x)
 	var/pos = 1
 	var/list/binaryX = list()
 	while(binaryX.len <= 16) //Decimal to Binary
