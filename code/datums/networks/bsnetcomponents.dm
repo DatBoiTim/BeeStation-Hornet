@@ -65,13 +65,13 @@
 /datum/component/interface/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=1, range=-1)
 	var/datum/packet/P = new(address, destination, packFlag, packProtocol, packType, packData)
 	var/datum/signal/S = new(P, signalTranMethod)
-	RF.post_signal(src, S, null, range)
+	RF.interface_post_signal(src, S, null, range)
 
 /datum/component/interface/proc/recieve_radio_signal(datum/signal/S)
 	var/datum/packet/P
 	if(istype(S.data, /datum/packet))
 		P = S.data
-		world.log >> "Packet Recieved"
+		world.log<<"Packet Recieved"
 	else
 		return FALSE
 
@@ -108,7 +108,7 @@
 /datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
 	..(D, R, addy)
 
-/datum/component/interface/wireless/change_freq(/datum/radio_frequency/N)
+/datum/component/interface/wireless/proc/change_freq(datum/radio_frequency/N)
 	SSradio.remove_interface(src, RF)
 	RF = N
 	SSradio.add_interface(src, RF)

@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 					continue
 			device.receive_signal(signal)
 
-/datum/radio_frequency/proc/post_signal(datum/component/interface/I, datum/signal/signal, filter = null as text|null, range = null as num|null)
+/datum/radio_frequency/proc/interface_post_signal(datum/component/interface/I, datum/signal/signal, filter = null as text|null, range = null as num|null)
 	// Ensure the signal's data is fully filled
 	signal.source = I
 	signal.frequency = frequency
@@ -237,7 +237,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 /obj/proc/receive_signal(datum/signal/signal)
 	return
 
-/datum/component/receive_radio_signal(datum/signal/signal)
+/datum/component/proc/receive_radio_signal(datum/signal/signal)
 	return
 
 /datum/signal
