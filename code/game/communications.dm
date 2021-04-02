@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		devices[filter] = devices_line = list()
 	devices_line += device
 
-/datum/radio_frequency/proc/add_listener(datum/component/interface, filter as text|null)
+/datum/radio_frequency/proc/add_interface_listener(datum/component/interface/device, filter as text|null)
 	if (!filter)
 		filter = "_default"
 
@@ -225,11 +225,19 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 		if(!devices_line.len)
 			devices -= devices_filter
 
+/datum/radio_frequency/proc/remove_interface_listener(datum/component/interface/device)
+	for(var/devices_filter in devices)
+		var/list/devices_line = devices[devices_filter]
+		if(!devices_line)
+			devices -= devices_filter
+		devices_line -= device
+		if(!devices_line.len)
+			devices -= devices_filter
 
 /obj/proc/receive_signal(datum/signal/signal)
 	return
 
-/datum/component/receive_signal(datum/signal/signal)
+/datum/component/receive_radio_signal(datum/signal/signal)
 	return
 
 /datum/signal
