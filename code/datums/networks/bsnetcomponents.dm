@@ -107,7 +107,7 @@
 /datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
 	..(D, R, addy)
 
-/datum/component/interface/wireless/change_freq(/datum/radio_frequency/N)
+/datum/component/interface/wireless/proc/change_freq(/datum/radio_frequency/N)
 	SSradio.remove_object(src, RF)
 	radio_connection = N
 	SSradio.add_object(src, RF)
