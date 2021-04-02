@@ -104,6 +104,12 @@
 	powernet.remove_interface(src)
 	return 1 //Powernet Successfully Disconnected
 
+/datum/component/interface/wired/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=0, range=-1)
+	if(src.powernet)
+		..(destination, packFlag, packProtocol, packType, packData, signalTranMethod, range)
+	else
+		return FALSE
+
 /datum/component/interface/wireless //Same Fields But Actually Functional
 
 //Standard Args Constructor
