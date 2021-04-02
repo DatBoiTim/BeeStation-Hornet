@@ -9,7 +9,6 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	var/assignment_hardware_id = HID_RESTRICTED_END
 	var/list/networks_by_id = list()				//id = network
 	var/list/interfaces_by_address = list()				//hardware id = component interface
-	var/list/interfaces_by_id = list()				//hardware id = component interface
 	var/resolve_collisions = TRUE
 
 /datum/controller/subsystem/processing/networks/Initialize()
@@ -36,6 +35,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 /datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/interface/D)
 	interfaces_by_address -= D.address
 	return
+
 
 /datum/controller/subsystem/processing/networks/proc/get_next_HID()
 	var/string = "[num2text(assignment_hardware_id++, 12)]"
