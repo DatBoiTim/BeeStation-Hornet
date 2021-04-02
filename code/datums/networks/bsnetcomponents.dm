@@ -36,6 +36,7 @@
 	data["protocol"] = P.data["protocol"]
 	data["type"] = P.data["type"]
 	data["data"] = P.data["data"]
+
 /*
 * Interface Datums
 * Contains:
@@ -104,13 +105,13 @@
 	powernet.remove_interface(src)
 	return 1 //Powernet Successfully Disconnected
 
-/datum/component/interface/wired/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=0, range=-1)
+/datum/component/interface/wired/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=0, range=-1)
 	if(src.powernet) //Is it plugged in?
 		..(destination, packFlag, packProtocol, packType, packData, signalTranMethod, range)
 	else
 		return FALSE
 
-/datum/component/interface/wired/proc/recieve_radio_signal(datum/signal/S)
+/datum/component/interface/wired/recieve_radio_signal(datum/signal/S)
 	if(src.powernet) //Is it plugged in?
 		..(S)
 	else
