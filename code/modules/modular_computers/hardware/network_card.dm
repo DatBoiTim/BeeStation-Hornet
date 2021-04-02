@@ -6,8 +6,6 @@
 	var/identification_id = null	// Identification ID. Technically MAC address of this device. Can't be changed by user.
 	var/identification_string = "" 	// Identification string, technically nickname seen in the network. Can be set by user.
 	var/datum/component/interface/netInterface
-	var/long_range = 0
-	var/ethernet = 0
 	malfunction_probability = 1
 	device_type = MC_NET
 	var/static/ntnet_card_uid = 1

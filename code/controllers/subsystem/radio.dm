@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(radio)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 	if(!frequency)
 		frequencies[f_text] = frequency = new(new_frequency)
-	frequency.add_interface_listener(device, filter)
+	frequency.add_listener(device, filter)
 	return frequency
 
 /datum/controller/subsystem/radio/proc/remove_object(obj/device, old_frequency)

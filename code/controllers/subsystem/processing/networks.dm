@@ -27,15 +27,14 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	return TRUE
 
 /datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/interface/D)
-	if(!interfaces_by_address[D.address])
-		interfaces_by_address[D.address] = D
+	if(!interfaces_by_address[D.hardware_id])
+		interfaces_by_address[D.hardware_id] = D
 		return TRUE
 	return FALSE
 
 /datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/interface/D)
 	interfaces_by_address -= D.address
 	return
-
 
 /datum/controller/subsystem/processing/networks/proc/get_next_HID()
 	var/string = "[num2text(assignment_hardware_id++, 12)]"

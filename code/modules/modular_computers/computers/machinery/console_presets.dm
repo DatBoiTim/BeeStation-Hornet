@@ -48,8 +48,6 @@
 
 /obj/machinery/modular_computer/console/preset/research/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
-	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
-	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/aidiag())
 
 
@@ -63,7 +61,6 @@
 
 /obj/machinery/modular_computer/console/preset/command/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
-	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/card_mod())
 
 // ===== CIVILIAN CONSOLE =====
