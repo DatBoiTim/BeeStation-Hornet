@@ -58,6 +58,7 @@
 	RF = R
 	SSradio.add_interface(src, RF)
 	address = addy
+	SSnetworks.register_interface(src)
 
 //Send Signal
 /*
