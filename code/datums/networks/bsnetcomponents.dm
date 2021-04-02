@@ -70,7 +70,7 @@
 	var/datum/packet/P
 	if(istype(S.data, /datum/packet))
 		P = S.data
-		//Print to Console Here
+		//Packet world.log
 	else
 		return FALSE
 
@@ -107,7 +107,7 @@
 /datum/component/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
 	..(D, R, addy)
 
-/datum/component/interface/wireless/proc/change_freq(/datum/radio_frequency/N)
+/datum/component/interface/wireless/proc/change_freq(datum/radio_frequency/N)
 	SSradio.remove_object(src, RF)
-	radio_connection = N
+	RF = N
 	SSradio.add_object(src, RF)
