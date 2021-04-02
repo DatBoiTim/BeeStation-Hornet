@@ -64,7 +64,7 @@
 /datum/component/interface/proc/send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod=1, range=-1)
 	var/datum/packet/P = new(address, destination, packFlag, packProtocol, packType, packData)
 	var/datum/signal/S = new(P, signalTranMethod)
-	RF.post_signal(src, S, null, range)
+	RF.interface_post_signal(src, S, null, range)
 
 /datum/component/interface/proc/recieve_signal(datum/signal/S)
 	var/datum/packet/P
