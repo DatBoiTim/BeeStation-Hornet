@@ -28,8 +28,8 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	return TRUE
 
 /datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/interface/D)
-	if(!interfaces_by_address[D.hardware_id])
-		interfaces_by_address[D.hardware_id] = D
+	if(!interfaces_by_address[D.address])
+		interfaces_by_address[D.address] = D
 		return TRUE
 	return FALSE
 
