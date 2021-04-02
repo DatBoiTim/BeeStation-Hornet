@@ -19,7 +19,7 @@ SUBSYSTEM_DEF(radio)
 	frequency.add_listener(device, filter)
 	return frequency
 
-/datum/controller/subsystem/radio/proc/add_object(datum/component/interface/device, new_frequency as num, filter = null as text|null)
+/datum/controller/subsystem/radio/proc/add_interface(datum/component/interface/device, new_frequency as num, filter = null as text|null)
 	var/f_text = num2text(new_frequency)
 	var/datum/radio_frequency/frequency = frequencies[f_text]
 	if(!frequency)
