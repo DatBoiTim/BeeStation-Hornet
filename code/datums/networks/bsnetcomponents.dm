@@ -50,7 +50,6 @@
 	var/obj/connectedDevice //The Device which the interface is attached to
 	var/datum/radio_frequency/RF //Apparently this needs to exist for all, I just have to determine the transmission media
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
-
 //Standard Args Constructor
 /datum/component/interface/New(obj/D, datum/radio_frequency/R, addy)
 	connectedDevice = D
@@ -79,7 +78,7 @@
 	var/datum/powernet/powernet //Powernet Connected. We all love PoE, it's time for EoP
 
 //Standard Args Constructor
-/datum/component/interface/wired/New(datum/powernet/P, obj/D, datum/radio_frequency/R,addy)
+/datum/component/interface/wired/New(datum/powernet/P, obj/D, datum/radio_frequency/R, addy)
 	powernet = P
 	..(D, R,addy)
 
