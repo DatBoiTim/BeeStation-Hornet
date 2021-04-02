@@ -229,7 +229,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 /obj/proc/receive_signal(datum/signal/signal)
 	return
 
-/datum/component/proc/receive_signal(datum/signal/signal)
+/datum/component/proc/receive_radio_signal(datum/signal/signal)
 	return
 
 /datum/signal

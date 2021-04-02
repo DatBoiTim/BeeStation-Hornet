@@ -54,7 +54,7 @@
 /datum/component/interface/New(obj/D, datum/radio_frequency/R, addy)
 	connectedDevice = D
 	RF = R
-	SSradio.add_object(src, RF)
+	SSradio.add_interface(src, RF)
 	address = addy
 
 //Send Signal
@@ -66,11 +66,11 @@
 	var/datum/signal/S = new(P, signalTranMethod)
 	RF.interface_post_signal(src, S, null, range)
 
-/datum/component/interface/proc/recieve_signal(datum/signal/S)
+/datum/component/interface/proc/recieve_radio_signal(datum/signal/S)
 	var/datum/packet/P
 	if(istype(S.data, /datum/packet))
 		P = S.data
-		//Packet world.log
+		world.log << "Packet Recieved"
 	else
 		return FALSE
 
@@ -108,6 +108,6 @@
 	..(D, R, addy)
 
 /datum/component/interface/wireless/proc/change_freq(datum/radio_frequency/N)
-	SSradio.remove_object(src, RF)
+	SSradio.remove_interface(src, RF)
 	RF = N
-	SSradio.add_object(src, RF)
+	SSradio.add_interface(src, RF)
