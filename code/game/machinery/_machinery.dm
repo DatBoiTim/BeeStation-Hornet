@@ -129,6 +129,7 @@ Class Procs:
 /obj/machinery/transmission_tester
 	name = "Transmission Test Machinery"
 	desc = "You should not be seeing this"
+	icon_state = "blackbox"
 	var/datum/interface/I
 
 /obj/machinery/transmission_tester/Initialize()
