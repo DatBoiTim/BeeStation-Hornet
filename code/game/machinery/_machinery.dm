@@ -126,6 +126,21 @@ Class Procs:
 	var/tgui_id // ID of TGUI interface
 	var/ui_style // ID of custom TGUI style (optional)
 
+/obj/machinery/transmission_tester
+	name = "Transmission Test Machinery"
+	desc = "You should not be seeing this"
+	var/datum/interface/I
+
+/obj/machinery/transmission_tester/Initialize()
+	var/datum/radio_frequency/RF = New(1461)
+	var/address = SSnetworks.make_address()
+	I = New(src, RF, address)
+	..()
+
+//Pass the instruction down
+/obj/machinery/transmission_tester/proc/transmit(destination, packFlag, packProtocol, packType, packData, signalTranMethod=1, range=-1)
+	I.send_packet(destination, packFlag, packProtocol, packType, packData, signalTranMethod, range)
+
 /obj/machinery/Initialize()
 	if(!armor)
 		armor = list("melee" = 25, "bullet" = 10, "laser" = 10, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 70, "stamina" = 0)

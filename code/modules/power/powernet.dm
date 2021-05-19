@@ -81,7 +81,7 @@
 	M.powernet = src
 	nodes[M] = M
 
-/datum/powernet/proc/remove_interface(datum/component/interface/wired/I)
+/datum/powernet/proc/remove_interface(datum/interface/wired/I)
 	interfaces -= I
 	I.powernet = null
 	if(is_empty())

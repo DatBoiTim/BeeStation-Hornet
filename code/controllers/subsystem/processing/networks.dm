@@ -26,13 +26,13 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	networks_by_id -= network.network_id
 	return TRUE
 
-/datum/controller/subsystem/processing/networks/proc/register_interface(datum/component/interface/D)
-	if(!interfaces_by_address[D.hardware_id])
-		interfaces_by_address[D.hardware_id] = D
+/datum/controller/subsystem/processing/networks/proc/register_interface(datum/interface/D)
+	if(!interfaces_by_address[D.address])
+		interfaces_by_address[D.address] = D
 		return TRUE
 	return FALSE
 
-/datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/component/interface/D)
+/datum/controller/subsystem/processing/networks/proc/unregister_interface(datum/interface/D)
 	interfaces_by_address -= D.address
 	return
 
