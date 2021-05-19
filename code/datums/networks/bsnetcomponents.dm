@@ -30,7 +30,12 @@
 
 //Copy Constructor
 /datum/packet/New(datum/packet/P)
-	..(P.srcAddress, P.dstAddress, P.data["flags"], P.data["protocol"], P.data["type"], P.data["data"])
+	srcAddress = P.srcAddress
+	dstAddress = P.dstAddress
+	data["flags"] = P.data["flags"]
+	data["protocol"] = P.data["protocol"]
+	data["type"] = P.data["type"]
+	data["data"] = P.data["data"]
 
 /*
 * Interface Datums
