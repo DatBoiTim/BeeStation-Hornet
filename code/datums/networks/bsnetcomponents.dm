@@ -97,7 +97,7 @@
 	if(!C || !C.powernet)
 		return FALSE
 
-	C.powernet.add_machine(src)
+	C.powernet.add_interface(src)
 	return TRUE
 
 /datum/interface/wired/proc/disconnect_from_network()
