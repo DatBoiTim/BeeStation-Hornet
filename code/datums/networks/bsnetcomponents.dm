@@ -18,24 +18,25 @@
 	var/dstAddress //Destination
 	var/list/data = list()
 
-//Standard Args Constructor
-/datum/packet/New(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData)
-	srcAddress = argSRCAddress
-	dstAddress = argDSTAddress
-	//Associative fields for data
-	data["flags"] = argFlag
-	data["protocol"] = argProtocol
-	data["type"] = argType
-	data["data"] = argData
-
-//Copy Constructor
-/datum/packet/New(datum/packet/P)
-	srcAddress = P.srcAddress
-	dstAddress = P.dstAddress
-	data["flags"] = P.data["flags"]
-	data["protocol"] = P.data["protocol"]
-	data["type"] = P.data["type"]
-	data["data"] = P.data["data"]
+//Constructor
+/datum/packet/New(argSRCAddress, argDSTAddress, argFlag, argProtocol, argType, argData, datum/packet/P)
+	//Copying an existing packet, if one is provided
+	if(P)
+		srcAddress = P.srcAddress
+		dstAddress = P.dstAddress
+		data["flags"] = P.data["flags"]
+		data["protocol"] = P.data["protocol"]
+		data["type"] = P.data["type"]
+		data["data"] = P.data["data"]
+	//Completely New and Unique Packet
+	else
+		srcAddress = argSRCAddress
+		dstAddress = argDSTAddress
+		//Associative fields for data
+		data["flags"] = argFlag
+		data["protocol"] = argProtocol
+		data["type"] = argType
+		data["data"] = argData
 
 /*
 * Interface Datums
@@ -51,7 +52,6 @@
 	var/obj/connectedDevice //The Device which the interface is attached to
 	var/datum/radio_frequency/RF //Apparently this needs to exist for all, I just have to determine the transmission media
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
-
 //Standard Args Constructor
 /datum/interface/New(obj/D, datum/radio_frequency/R, addy)
 	connectedDevice = D
