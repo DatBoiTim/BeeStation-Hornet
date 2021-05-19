@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(reverseradiochannels, list(
 
 /datum/radio_frequency
 	var/frequency as num
-	var/list/list/obj/devices = list()
+	var/list/obj/devices = list()
 
 /datum/radio_frequency/New(freq)
 	frequency = freq
