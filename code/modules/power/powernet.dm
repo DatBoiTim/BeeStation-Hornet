@@ -87,7 +87,7 @@
 	if(is_empty())
 		qdel(src)
 
-/datum/powernet/proc/add_interfaces(datum/component/interface/wired/I)
+/datum/powernet/proc/add_interface(datum/interface/wired/I)
 	if(I.powernet)
 		if(I.powernet == src)
 			return
