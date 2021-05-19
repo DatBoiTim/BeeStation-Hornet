@@ -134,8 +134,7 @@ Class Procs:
 
 /obj/machinery/transmission_tester/Initialize()
 	var/datum/radio_frequency/RF = New(1461)
-	var/address = SSnetworks.make_address()
-	I = New(src, RF, address)
+	I = New(src, RF)
 	..()
 
 //Pass the instruction down

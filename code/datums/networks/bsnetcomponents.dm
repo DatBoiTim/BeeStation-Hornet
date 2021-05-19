@@ -48,11 +48,11 @@
 	var/address //Maximum address size is 65535. Any positive integer between 0 and this is valid. Addresses are actually technically assigned to the interface and not the device, hence it is here.
 
 //Standard Args Constructor
-/datum/interface/New(obj/D, datum/radio_frequency/R, addy)
+/datum/interface/New(obj/D, datum/radio_frequency/R)
 	connectedDevice = D
 	RF = R
 	SSradio.add_interface(src, RF)
-	address = addy
+	address = SSnetworks.get_next_address()
 	SSnetworks.register_interface(src)
 
 //Send Signal
@@ -78,9 +78,9 @@
 	var/datum/powernet/powernet //Powernet Connected. We all love PoE, it's time for EoP
 
 //Standard Args Constructor
-/datum/interface/wired/New(datum/powernet/P, obj/D, datum/radio_frequency/R, addy)
+/datum/interface/wired/New(datum/powernet/P, obj/D, datum/radio_frequency/R)
 	powernet = P
-	..(D, R,addy)
+	..(D, R)
 
 //Connects Connected Device to the Powernet
 /datum/interface/wired/proc/connect_to_network()
@@ -116,8 +116,8 @@
 /datum/interface/wireless //Same Fields But Actually Functional
 
 //Standard Args Constructor
-/datum/interface/wireless/New(datum/radio_frequency/R, obj/D, addy)
-	..(D, R, addy)
+/datum/interface/wireless/New(datum/radio_frequency/R, obj/D)
+	..(D, R)
 
 /datum/interface/wireless/proc/change_freq(datum/radio_frequency/N)
 	SSradio.remove_interface(src, RF)
