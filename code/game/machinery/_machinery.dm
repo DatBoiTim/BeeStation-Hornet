@@ -130,11 +130,11 @@ Class Procs:
 	name = "Transmission Test Machinery"
 	desc = "You should not be seeing this"
 	icon_state = "blackbox"
-	var/datum/interface/I
+	var/datum/interface/wireless/I
 
 /obj/machinery/transmission_tester/Initialize()
 	var/datum/radio_frequency/RF = New(1461)
-	I = New(src, RF)
+	I = new /datum/interface/wireless(src, RF)
 	..()
 
 //Pass the instruction down
