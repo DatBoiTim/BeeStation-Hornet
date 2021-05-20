@@ -79,6 +79,20 @@
 	outfit = /datum/outfit/piratecorpse
 	hair_style = "Bald"
 	facial_hair_style = "Shaved"
+/obj/effect/landmark/mobcorpse/syndicatecommando
+	name = "Syndicate Commando"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/space/void/merc
+	corpseshoes = /obj/item/clothing/shoes/swat
+	corpsegloves = /obj/item/clothing/gloves/swat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsehelmet = /obj/item/clothing/head/helmet/space/void/merc
+	corpseback = /obj/item/weapon/tank/jetpack/oxygen
+	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
+	corpseid = 1
+	corpseidjob = "Operative"
+	corpseidaccess = "Syndicate"
 
 /datum/outfit/piratecorpse
 	name = "Pirate Corpse"

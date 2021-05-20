@@ -15,6 +15,27 @@
 	new /obj/item/storage/belt/military(src)
 	new /obj/item/crowbar/red(src)
 	new /obj/item/clothing/glasses/night(src)
+	new /obj/item/clothing/head/helmet/space/void/merc(src)
+	new /obj/item/clothing/suit/space/void/merc(src)
+	new /obj/item/weapon/crowbar/red(src)
+	new /obj/item/weapon/cell/high(src)
+	new /obj/item/weapon/card/id/syndicate(src)
+	new /obj/item/device/multitool(src)
+	new /obj/item/weapon/shield/energy(src)
+	new /obj/item/clothing/shoes/magboots(src)
+
+
+/obj/structure/closet/syndicate/suit
+	desc = "It's a storage unit for voidsuits."
+
+/obj/structure/closet/syndicate/suit/New()
+	..()
+	new /obj/item/weapon/tank/jetpack/oxygen(src)
+	new /obj/item/clothing/shoes/magboots(src)
+	new /obj/item/clothing/suit/space/void/merc(src)
+	new /obj/item/clothing/mask/gas/syndicate(src)
+	new /obj/item/clothing/head/helmet/space/void/merc(src)
+
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for a Syndicate boarding party."

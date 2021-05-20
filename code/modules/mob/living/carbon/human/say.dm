@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
 	if(slurring)
@@ -16,6 +17,11 @@
 				return real_name
 		else
 			return real_name
+	if(istype(back,/obj/item/weapon/rig))
+		var/obj/item/weapon/rig/rig = back
+		// todo: fix this shit
+		if(rig.speech && rig.speech.voice_holder && rig.speech.voice_holder.active && rig.speech.voice_holder.voice)
+			voice_sub = rig.speech.voice_holder.voice
 	if(mind)
 		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
 		if(changeling && changeling.mimicing )
@@ -94,3 +100,4 @@
 
 					say(trimmed)
 				winset(client, "input", "text=[null]")
+

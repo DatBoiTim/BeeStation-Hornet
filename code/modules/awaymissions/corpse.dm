@@ -299,6 +299,20 @@
 	mob_gender = FEMALE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
+/obj/effect/landmark/corpse/syndicatecommando
+	name = "Syndicate Commando"
+	corpseuniform = /obj/item/clothing/under/syndicate
+	corpsesuit = /obj/item/clothing/suit/space/void/merc
+	corpseshoes = /obj/item/clothing/shoes/swat
+	corpsegloves = /obj/item/clothing/gloves/swat
+	corpseradio = /obj/item/device/radio/headset
+	corpsemask = /obj/item/clothing/mask/gas/syndicate
+	corpsehelmet = /obj/item/clothing/head/helmet/space/void/merc
+	corpseback = /obj/item/weapon/tank/jetpack/oxygen
+	corpsepocket1 = /obj/item/weapon/tank/emergency_oxygen
+	corpseid = 1
+	corpseidjob = "Operative"
+	corpseidaccess = "Syndicate"
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
@@ -356,6 +370,10 @@
 
 /obj/effect/mob_spawn/human/engineer/rig
 	outfit = /datum/outfit/job/engineer/gloved/rig
+/obj/effect/landmark/corpse/engineer/rig
+	corpsesuit = /obj/item/clothing/suit/space/void/engineering
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/void/engineering
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
@@ -369,6 +387,10 @@
 	name = "Shaft Miner"
 	outfit = /datum/outfit/job/miner
 
+/obj/effect/landmark/corpse/miner/rig
+	corpsesuit = /obj/item/clothing/suit/space/void/mining
+	corpsemask = /obj/item/clothing/mask/breath
+	corpsehelmet = /obj/item/clothing/head/helmet/space/void/mining
 /obj/effect/mob_spawn/human/miner/rig
 	outfit = /datum/outfit/job/miner/equipped/hardsuit
 

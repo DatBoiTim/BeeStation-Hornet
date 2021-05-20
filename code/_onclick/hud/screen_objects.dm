@@ -102,6 +102,301 @@
 	layer = HUD_LAYER
 	plane = HUD_PLANE
 
+/atom/movable/screen/Click(location, control, params)
+	if(!usr)
+		return 1
+
+	switch(name)
+		if("toggle")
+			if(usr.hud_used.inventory_shown)
+				usr.hud_used.inventory_shown = 0
+				usr.client.screen -= usr.hud_used.other
+			else
+				usr.hud_used.inventory_shown = 1
+				usr.client.screen += usr.hud_used.other
+
+			usr.hud_used.hidden_inventory_update()
+
+		if("equip")
+			if (istype(usr.loc,/obj/mecha)) // stops inventory actions in a mech
+				return 1
+			if(ishuman(usr))
+				var/mob/living/carbon/human/H = usr
+				H.quick_equip()
+
+		if("resist")
+			if(isliving(usr))
+				var/mob/living/L = usr
+				L.resist()
+
+		if("mov_intent")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				if(C.legcuffed)
+					C << "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>"
+					C.m_intent = "walk"	//Just incase
+					C.hud_used.move_intent.icon_state = "walking"
+					return 1
+				switch(usr.m_intent)
+					if("run")
+						usr.m_intent = "walk"
+						usr.hud_used.move_intent.icon_state = "walking"
+					if("walk")
+						usr.m_intent = "run"
+						usr.hud_used.move_intent.icon_state = "running"
+		if("m_intent")
+			if(!usr.m_int)
+				switch(usr.m_intent)
+					if("run")
+						usr.m_int = "13,14"
+					if("walk")
+						usr.m_int = "14,14"
+					if("face")
+						usr.m_int = "15,14"
+			else
+				usr.m_int = null
+		if("walk")
+			usr.m_intent = "walk"
+			usr.m_int = "14,14"
+		if("face")
+			usr.m_intent = "face"
+			usr.m_int = "15,14"
+		if("run")
+			usr.m_intent = "run"
+			usr.m_int = "13,14"
+		if("Reset Machine")
+			usr.unset_machine()
+		if("internal")
+			if(iscarbon(usr))
+				var/mob/living/carbon/C = usr
+				if(!C.stat && !C.stunned && !C.paralysis && !C.restrained())
+					if(C.internal)
+						C.internal = null
+						C << "<span class='notice'>No longer running on internals.</span>"
+						if(C.internals)
+							C.internals.icon_state = "internal0"
+					else
+
+						var/no_mask
+						if(!(C.wear_mask && C.wear_mask.flags & AIRTIGHT))
+							var/mob/living/carbon/human/H = C
+							if(!(H.head && H.head.flags & AIRTIGHT))
+								no_mask = 1
+
+						if(no_mask)
+							C << "<span class='notice'>You are not wearing a suitable mask or helmet.</span>"
+							return 1
+						else
+							var/list/nicename = null
+							var/list/tankcheck = null
+							var/breathes = "oxygen"    //default, we'll check later
+							var/list/contents = list()
+							var/from = "on"
+
+							if(ishuman(C))
+								var/mob/living/carbon/human/H = C
+								breathes = H.species.breath_type
+								nicename = list ("suit", "back", "belt", "right hand", "left hand", "left pocket", "right pocket")
+								tankcheck = list (H.s_store, C.back, H.belt, C.r_hand, C.l_hand, H.l_store, H.r_store)
+							else
+								nicename = list("right hand", "left hand", "back")
+								tankcheck = list(C.r_hand, C.l_hand, C.back)
+
+							// Rigs are a fucking pain since they keep an air tank in nullspace.
+							if(istype(C.back,/obj/item/weapon/rig))
+								var/obj/item/weapon/rig/rig = C.back
+								if(rig.air_supply)
+									from = "in"
+									nicename |= "hardsuit"
+									tankcheck |= rig.air_supply
+
+							for(var/i=1, i<tankcheck.len+1, ++i)
+								if(istype(tankcheck[i], /obj/item/weapon/tank))
+									var/obj/item/weapon/tank/t = tankcheck[i]
+									if (!isnull(t.manipulated_by) && t.manipulated_by != C.real_name && findtext(t.desc,breathes))
+										contents.Add(t.air_contents.total_moles)	//Someone messed with the tank and put unknown gasses
+										continue					//in it, so we're going to believe the tank is what it says it is
+									switch(breathes)
+																		//These tanks we're sure of their contents
+										if("nitrogen") 							//So we're a bit more picky about them.
+
+											if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+												contents.Add(t.air_contents.gas["nitrogen"])
+											else
+												contents.Add(0)
+
+										if ("oxygen")
+											if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["oxygen"])
+											else
+												contents.Add(0)
+
+										// No races breath this, but never know about downstream servers.
+										if ("carbon dioxide")
+											if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["carbon_dioxide"])
+											else
+												contents.Add(0)
+
+
+								else
+									//no tank so we set contents to 0
+									contents.Add(0)
+
+							//Alright now we know the contents of the tanks so we have to pick the best one.
+
+							var/best = 0
+							var/bestcontents = 0
+							for(var/i=1, i <  contents.len + 1 , ++i)
+								if(!contents[i])
+									continue
+								if(contents[i] > bestcontents)
+									best = i
+									bestcontents = contents[i]
+
+
+							//We've determined the best container now we set it as our internals
+
+							if(best)
+								C << "<span class='notice'>You are now running on internals from [tankcheck[best]] [from] your [nicename[best]].</span>"
+								C.internal = tankcheck[best]
+
+
+							if(C.internal)
+								if(C.internals)
+									C.internals.icon_state = "internal1"
+							else
+								C << "<span class='notice'>You don't have a[breathes=="oxygen" ? "n oxygen" : addtext(" ",breathes)] tank.</span>"
+		if("act_intent")
+			usr.a_intent_change("right")
+		if("help")
+			usr.a_intent = "help"
+			usr.hud_used.action_intent.icon_state = "intent_help"
+		if("harm")
+			usr.a_intent = "hurt"
+			usr.hud_used.action_intent.icon_state = "intent_hurt"
+		if("grab")
+			usr.a_intent = "grab"
+			usr.hud_used.action_intent.icon_state = "intent_grab"
+		if("disarm")
+			usr.a_intent = "disarm"
+			usr.hud_used.action_intent.icon_state = "intent_disarm"
+
+		if("pull")
+			usr.stop_pulling()
+		if("throw")
+			if(!usr.stat && isturf(usr.loc) && !usr.restrained())
+				usr:toggle_throw_mode()
+		if("drop")
+			usr.drop_item_v()
+
+		if("module")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+//				if(R.module)
+//					R.hud_used.toggle_show_robot_modules()
+//					return 1
+				R.pick_module()
+
+		if("inventory")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.hud_used.toggle_show_robot_modules()
+					return 1
+				else
+					R << "You haven't selected a module yet."
+
+		if("radio")
+			if(issilicon(usr))
+				usr:radio_menu()
+		if("panel")
+			if(issilicon(usr))
+				usr:installed_modules()
+
+		if("store")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				if(R.module)
+					R.uneq_active()
+					R.hud_used.update_robot_modules_display()
+				else
+					R << "You haven't selected a module yet."
+
+		if("module1")
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(1)
+
+		if("module2")
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(2)
+
+		if("module3")
+			if(istype(usr, /mob/living/silicon/robot))
+				usr:toggle_module(3)
+
+		if("Allow Walking")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetMove()
+			gun_click_time = world.time
+
+		if("Disallow Walking")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetMove()
+			gun_click_time = world.time
+
+		if("Allow Running")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetRun()
+			gun_click_time = world.time
+
+		if("Disallow Running")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetRun()
+			gun_click_time = world.time
+
+		if("Allow Item Use")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetClick()
+			gun_click_time = world.time
+
+
+		if("Disallow Item Use")
+			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
+				return
+			if(!istype(usr.equipped(),/obj/item/weapon/gun))
+				usr << "You need your gun in your active hand to do that!"
+				return
+			usr.client.AllowTargetClick()
+			gun_click_time = world.time
+
+		if("Toggle Gun Mode")
+			usr.client.ToggleGunMode()
+
+		else
+			return 0
+	return 1
+
 /atom/movable/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
@@ -560,11 +855,9 @@
 /atom/movable/screen/zone_sel/proc/set_selected_zone(choice, mob/user)
 	if(user != hud?.mymob)
 		return
-
 	if(choice != selecting)
 		selecting = choice
 		update_icon()
-
 	return TRUE
 
 /atom/movable/screen/zone_sel/update_icon()
