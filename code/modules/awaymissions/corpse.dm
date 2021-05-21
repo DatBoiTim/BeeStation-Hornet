@@ -299,20 +299,6 @@
 	mob_gender = FEMALE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper"
-/obj/effect/landmark/corpse/syndicatecommando
-	name = "Syndicate Commando"
-	uniform = /obj/item/clothing/under/syndicate
-	suit = /obj/item/clothing/suit/space/void/merc
-	shoes = /obj/item/clothing/shoes/swat
-	gloves = /obj/item/clothing/gloves/swat
-	radio = /obj/item/device/radio/headset
-	mask = /obj/item/clothing/mask/gas/syndicate
-	helmet = /obj/item/clothing/head/helmet/space/void/merc
-	back = /obj/item/weapon/tank/jetpack/oxygen
-	pocket1 = /obj/item/weapon/tank/emergency_oxygen
-	id = 1
-	idjob = "Operative"
-	idaccess = "Syndicate"
 
 // I'll work on making a list of corpses people request for maps, or that I think will be commonly used. Syndicate operatives for example.
 
