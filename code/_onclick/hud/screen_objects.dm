@@ -320,10 +320,7 @@
 			if(istype(C.back,/obj/item/weapon/rig))
 				var/obj/item/weapon/rig/rig = C.back
 				if(rig.air_supply)
-					from = "in"
-					nicename |= "hardsuit"
-					tankcheck |= rig.air_supply
-				//PUT THE INTERNALS SHIT HERE
+					C.internal = rig.air_supply
 			else
 				var/obj/item/clothing/mask/M = C.wear_mask
 				if(M.mask_adjusted) // if mask on face but pushed down
