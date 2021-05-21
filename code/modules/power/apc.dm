@@ -161,23 +161,6 @@
 	if(terminal)
 		terminal.connect_to_network()
 
-/obj/machinery/power/apc/drain_power(var/drain_check, var/surge)
-
-	if(drain_check)
-		return 1
-
-	if(!cell)
-		return 0
-
-	if(surge && !emagged)
-		flick("apc-spark", src)
-		emagged = 1
-		locked = 0
-		update_icon()
-		return 0
-
-	return cell.drain_power(drain_check)
-
 /obj/machinery/power/apc/New(turf/loc, var/ndir, var/building=0)
 	if (!req_access)
 		req_access = list(ACCESS_ENGINE_EQUIP)
@@ -715,14 +698,14 @@
 		wires.interact(user)
 	else
 		return ..()
-		
+
 /obj/machinery/power/apc/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS)
 		if(!has_electronics)
 			if(stat & BROKEN)
 				to_chat(user, "<span class='warning'>[src]'s frame is too damaged to support a circuit.</span>")
 				return FALSE
-			return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)	
+			return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 		else if(!cell)
 			if(stat & MAINT)
 				to_chat(user, "<span class='warning'>There's no connector for a power cell.</span>")
