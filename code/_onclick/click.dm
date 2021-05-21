@@ -296,8 +296,7 @@
 			return
 	swap_hand()
 
-/mob/living/carbon/human/MiddleClickOn(var/atom/A)
-
+/mob/living/carbon/human/MiddleClickOn(atom/A)
 	if(back)
 		var/obj/item/weapon/rig/rig = back
 		if(istype(rig) && rig.selected_module)
@@ -305,8 +304,7 @@
 			next_move = world.time + 8
 			rig.selected_module.engage(A)
 			return
-
-	swap_hand()
+	..(A)
 
 /mob/living/simple_animal/drone/MiddleClickOn(atom/A)
 	swap_hand()
