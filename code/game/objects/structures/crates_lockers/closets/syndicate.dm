@@ -17,11 +17,6 @@
 	new /obj/item/clothing/glasses/night(src)
 	new /obj/item/clothing/head/helmet/space/void/merc(src)
 	new /obj/item/clothing/suit/space/void/merc(src)
-	new /obj/item/weapon/crowbar/red(src)
-	new /obj/item/weapon/cell/high(src)
-	new /obj/item/weapon/card/id/syndicate(src)
-	new /obj/item/device/multitool(src)
-	new /obj/item/weapon/shield/energy(src)
 	new /obj/item/clothing/shoes/magboots(src)
 
 
@@ -30,7 +25,7 @@
 
 /obj/structure/closet/syndicate/suit/New()
 	..()
-	new /obj/item/weapon/tank/jetpack/oxygen(src)
+	new /obj/item/tank/jetpack/carbondioxide(src)
 	new /obj/item/clothing/shoes/magboots(src)
 	new /obj/item/clothing/suit/space/void/merc(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
