@@ -7,7 +7,7 @@
 
 	heat_protection = HEAD
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 20)
-	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 	light_overlay = "helmet_light"
 
@@ -20,7 +20,7 @@
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 
 	//Breach thresholds, should ideally be inherited by most (if not all) voidsuits.
 	breach_threshold = 18
