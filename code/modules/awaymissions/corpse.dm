@@ -356,10 +356,6 @@
 
 /obj/effect/mob_spawn/human/engineer/rig
 	outfit = /datum/outfit/job/engineer/gloved/rig
-/obj/effect/landmark/corpse/engineer/rig
-	corpsesuit = /obj/item/clothing/suit/space/void/engineering
-	corpsemask = /obj/item/clothing/mask/breath
-	corpsehelmet = /obj/item/clothing/head/helmet/space/void/engineering
 
 /obj/effect/mob_spawn/human/clown
 	name = "Clown"
@@ -373,10 +369,6 @@
 	name = "Shaft Miner"
 	outfit = /datum/outfit/job/miner
 
-/obj/effect/landmark/corpse/miner/rig
-	corpsesuit = /obj/item/clothing/suit/space/void/mining
-	corpsemask = /obj/item/clothing/mask/breath
-	corpsehelmet = /obj/item/clothing/head/helmet/space/void/mining
 /obj/effect/mob_spawn/human/miner/rig
 	outfit = /datum/outfit/job/miner/equipped/hardsuit
 
