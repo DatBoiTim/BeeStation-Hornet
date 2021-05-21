@@ -11,15 +11,15 @@
 	name = "hardsuit control module"
 	icon = 'icons/obj/rig_modules.dmi'
 	desc = "A back-mounted hardsuit deployment and control mechanism."
-	slot_flags = SLOT_BACK
+	slot_flags = ITEM_SLOT_BACKPACK
 	req_one_access = null
 	req_access = null
 	w_class = 4
 
 	// These values are passed on to all component pieces.
 	armor = list(melee = 40, bullet = 5, laser = 20,energy = 5, bomb = 35, bio = 100, rad = 20)
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
+	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	permeability_coefficient = 0
 
