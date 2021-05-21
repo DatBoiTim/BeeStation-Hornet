@@ -19,7 +19,7 @@
 	var/fire_force = 30
 	var/fire_distance = 10
 
-	var/charges = 3
+	var/max_ammo = 3
 
 /obj/item/rig_module/grenade_launcher/accepts_item(var/obj/item/input_device, var/mob/living/user)
 
@@ -144,7 +144,7 @@
 
 /obj/item/rig_module/mounted/energy_blade/process()
 	if(holder && holder.wearer)
-		if(!(locate(/obj/item/energy_katana/B) in holder.wearer))
+		if(!(locate(/obj/item/energy_katana) in holder.wearer))
 			deactivate()
 			return 0
 	..()
