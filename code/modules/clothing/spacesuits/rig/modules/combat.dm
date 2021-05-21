@@ -87,12 +87,13 @@
 	interface_name = "mounted laser cannon"
 	interface_desc = "A shoulder-mounted cell-powered laser cannon."
 
-	var/gun_type = /obj/item/weapon/gun/energy/lasercannon/mounted
-	var/obj/item/weapon/gun/gun
+	var/gun_type = /obj/item/gun/energy/e_gun/turret
+	var/obj/item/weapon/gun/G
+
 
 /obj/item/rig_module/mounted/New()
 	..()
-	gun = new gun_type(src)
+	G = new gun_type(src)
 
 /obj/item/rig_module/mounted/engage(atom/target)
 
@@ -100,26 +101,27 @@
 		return 0
 
 	if(!target)
-		gun.attack_self(holder.wearer)
+		G.attack_self(holder.wearer)
 		return 1
 
-	gun.Fire(target,holder.wearer)
+	G.Fire(target,holder.wearer)
 	return 1
 
 /obj/item/rig_module/mounted/taser
 
-	name = "mounted taser"
-	desc = "A shoulder-mounted energy projector."
+	name = "mounted disabler"
+	desc = "A shoulder-mounted non-lethal energy projector."
 
 	usable = 0
 
-	suit_overlay_active = "mounted-taser"
-	suit_overlay_inactive = "mounted-taser"
+	suit_overlay_active = "mounted-disabler"
+	suit_overlay_inactive = "mounted-disabler"
 
 	interface_name = "mounted energy gun"
 	interface_desc = "A shoulder-mounted cell-powered energy gun."
 
-	gun_type = /obj/item/weapon/gun/energy/gun/mounted
+	gun_type = /obj/item/projectile/beam/disabler
+
 
 /obj/item/rig_module/mounted/energy_blade
 
@@ -141,12 +143,10 @@
 	gun_type = /obj/item/weapon/gun/energy/crossbow/ninja
 
 /obj/item/rig_module/mounted/energy_blade/process()
-
 	if(holder && holder.wearer)
-		if(!(locate(/obj/item/weapon/melee/energy/blade) in holder.wearer))
+		if(!(locate(/obj/item/energy_katana/B) in holder.wearer))
 			deactivate()
 			return 0
-
 	..()
 
 /obj/item/rig_module/mounted/energy_blade/activate()
@@ -156,18 +156,17 @@
 		M << "<span class='danger'>Your hands are full.</span>"
 		deactivate()
 		return
-	var/obj/item/weapon/melee/energy/blade/B = new(M)
+	var/obj/item/energy_katana/B = new(M)
 	B.creator = M
-	M.put_in_hands(blade)
+	M.put_in_hands(B)
 
 /obj/item/rig_module/mounted/energy_blade/deactivate()
 	..()
 	var/mob/living/M = holder.wearer
 	if(!M)
 		return
-	for(var/obj/item/weapon/melee/energy/blade/blade in M.contents)
-		M.drop_from_inventory(blade)
-		del(blade)
+	for(var/obj/item/energy_katana/B in M.contents)
+		qdel(B)
 
 /obj/item/rig_module/fabricator
 	name = "matter fabricator"
