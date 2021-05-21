@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /mob/living/carbon/human/say_mod(input, list/message_mods = list())
 	verb_say = dna.species.say_mod
 	if(slurring)
