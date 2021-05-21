@@ -19,7 +19,7 @@
 	var/fire_force = 30
 	var/fire_distance = 10
 
-	charges = list(("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),list("smoke bomb",  "smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3),list("EMP grenade", "EMP grenade", /obj/item/weapon/grenade/empgrenade, 3),)
+	var/charges = 3
 
 /obj/item/rig_module/grenade_launcher/accepts_item(var/obj/item/input_device, var/mob/living/user)
 
@@ -88,7 +88,7 @@
 	interface_desc = "A shoulder-mounted cell-powered laser cannon."
 
 	var/gun_type = /obj/item/gun/energy/e_gun/turret
-	var/obj/item/weapon/gun/G
+	var/obj/item/gun/G
 
 
 /obj/item/rig_module/mounted/New()
@@ -180,7 +180,7 @@
 	interface_name = "death blossom launcher"
 	interface_desc = "An integrated microfactory that produces poisoned throwing stars from thin air and electricity."
 
-	var/fabrication_type = /obj/item/weapon/star/ninja
+	var/fabrication_type = /obj/item/throwing_star/ninja
 	var/fire_force = 30
 	var/fire_distance = 10
 
