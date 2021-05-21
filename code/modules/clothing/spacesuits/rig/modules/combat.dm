@@ -19,11 +19,7 @@
 	var/fire_force = 30
 	var/fire_distance = 10
 
-	charges = list(
-		list("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),
-		list("smoke bomb",  "smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3),
-		list("EMP grenade", "EMP grenade", /obj/item/weapon/grenade/empgrenade, 3),
-		)
+	charges = list(("flashbang",   "flashbang",   /obj/item/weapon/grenade/flashbang,  3),list("smoke bomb",  "smoke bomb",  /obj/item/weapon/grenade/smokebomb,  3),list("EMP grenade", "EMP grenade", /obj/item/weapon/grenade/empgrenade, 3),)
 
 /obj/item/rig_module/grenade_launcher/accepts_item(var/obj/item/input_device, var/mob/living/user)
 
@@ -45,8 +41,7 @@
 		return 0
 
 	user << "<font color='blue'><b>You slot \the [input_device] into the suit module.</b></font>"
-	user.drop_from_inventory(input_device)
-	del(input_device)
+	qdel(input_device)
 	accepted_item.charges++
 	return 1
 
@@ -155,35 +150,26 @@
 	..()
 
 /obj/item/rig_module/mounted/energy_blade/activate()
-
 	..()
-
 	var/mob/living/M = holder.wearer
-
 	if(M.l_hand && M.r_hand)
 		M << "<span class='danger'>Your hands are full.</span>"
 		deactivate()
 		return
-
-	var/obj/item/weapon/melee/energy/blade/blade = new(M)
-	blade.creator = M
+	var/obj/item/weapon/melee/energy/blade/B = new(M)
+	B.creator = M
 	M.put_in_hands(blade)
 
 /obj/item/rig_module/mounted/energy_blade/deactivate()
-
 	..()
-
 	var/mob/living/M = holder.wearer
-
 	if(!M)
 		return
-
 	for(var/obj/item/weapon/melee/energy/blade/blade in M.contents)
 		M.drop_from_inventory(blade)
 		del(blade)
 
 /obj/item/rig_module/fabricator
-
 	name = "matter fabricator"
 	desc = "A self-contained microfactory system for hardsuit integration."
 	selectable = 1
@@ -200,12 +186,9 @@
 	var/fire_distance = 10
 
 /obj/item/rig_module/fabricator/engage(atom/target)
-
 	if(!..())
 		return 0
-
 	var/mob/living/H = holder.wearer
-
 	if(target)
 		var/obj/item/firing = new fabrication_type()
 		firing.loc = get_turf(src)
