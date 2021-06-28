@@ -287,9 +287,9 @@
 
 	// Non-subspace radios will check in a couple of seconds, and if the signal
 	// was never received, send a mundane broadcast (no headsets).
-	addtimer(CALLBACK(src, .proc/backup_transmission, signal), 20)
+	addtimer(CALLBACK(src, .proc/backup_transmission, signal, send_freq, src), 20)
 
-/obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal)
+/obj/item/radio/proc/backup_transmission(datum/signal/subspace/vocal/signal, datum/radio_frequency/send_freq, datum/sender)
 	var/turf/T = get_turf(src)
 	if (signal.data["done"] && (T.get_virtual_z_level() in signal.levels))
 		return
@@ -298,7 +298,7 @@
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.levels = list(T.get_virtual_z_level())
-	signal.broadcast()
+	send_freq.post_signal(sender, signal, , signal.levels)
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
