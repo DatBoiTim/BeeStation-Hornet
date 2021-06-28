@@ -277,13 +277,7 @@
 		return
 
 	var/datum/radio_frequency/send_freq = channels[channel]
-	send_freq.post_signal(src, signal, , signal.levels)
-	// All radios make an attempt to use the subspace system first
-	signal.send_to_receivers()
-
-	// If the radio is subspace-only, that's all it can do
-	if (subspace_transmission)
-		return
+	send_freq.post_signal(src, signal)
 
 	// Non-subspace radios will check in a couple of seconds, and if the signal
 	// was never received, send a mundane broadcast (no headsets).
@@ -298,7 +292,50 @@
 	signal.data["compression"] = 0
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.levels = list(T.get_virtual_z_level())
-	send_freq.post_signal(sender, signal, , signal.levels)
+	send_freq.post_signal(sender, signal)
+
+/obj/item/radio/receive_signal(datum/signal/signal)
+	var/list/receive = get_mobs_in_radio_ranges(src)
+
+	// Cut out mobs with clients who are admins and have radio chatter disabled.
+	for(var/mob/R in receive)
+		if (R.client && R.client.holder && !(R.client.prefs.chat_toggles & CHAT_RADIO))
+			receive -= R
+
+	// Add observers who have ghost radio enabled.
+	for(var/mob/dead/observer/M in GLOB.player_list)
+		if(M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTRADIO))
+			receive |= M
+
+	// Render the message and have everybody hear it.
+	// Always call this on the virtualspeaker to avoid issues.
+	var/spans = data["spans"]
+	var/list/message_mods = data["mods"]
+	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
+	for(var/atom/movable/hearer in receive)
+		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
+
+	// This following recording is intended for research and feedback in the use of department radio channels
+	if(length(receive))
+		SSblackbox.LogBroadcast(frequency)
+
+	var/spans_part = ""
+	if(length(spans))
+		spans_part = "(spans:"
+		for(var/S in spans)
+			spans_part = "[spans_part] [S]"
+		spans_part = "[spans_part] ) "
+
+	var/lang_name = data["language"]
+	var/log_text = "\[[get_radio_name(frequency)]\] [spans_part]\"[message]\" (language: [lang_name])"
+
+	var/mob/source_mob = virt.source
+	if(istype(source_mob))
+		source_mob.log_message(log_text, LOG_TELECOMMS)
+	else
+		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
+
+	QDEL_IN(virt, 50)  // Make extra sure the virtualspeaker gets qdeleted
 
 /obj/item/radio/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	. = ..()
