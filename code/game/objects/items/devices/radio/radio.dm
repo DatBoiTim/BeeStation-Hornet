@@ -17,7 +17,7 @@
 	obj_flags = USES_TGUI
 
 	var/on = TRUE
-	var/frequency = FREQ_COMMON
+	var/datum/radio_frequency/frequency = FREQ_COMMON
 	var/canhear_range = 3  // The range around the radio in which mobs can hear what it receives.
 	var/emped = 0  // Tracks the number of EMPs currently stacked.
 	var/headset = FALSE
@@ -38,7 +38,7 @@
 	var/translate_binary = FALSE  // If true, can hear the special binary channel.
 	var/independent = FALSE  // If true, can say/hear on the special CentCom channel.
 	var/syndie = FALSE  // If true, hears all well-known channels automatically, and can say/hear on the Syndicate channel.
-	var/list/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h).
+	var/list/datum/radio_frequency/channels = list()  // Map from name (see communications.dm) to on/off. First entry is current department (:h).
 	var/list/secure_radio_connections
 	var/radio_silent = FALSE // If true, radio doesn't make sound effects (ie for Syndicate internal radio implants)
 
@@ -93,8 +93,9 @@
 	frequency = sanitize_frequency(frequency, freerange)
 	set_frequency(frequency)
 
-	for(var/ch_name in channels)
-		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+	for(var/ch_name in channels) //See the defines under defines/radio.dm for what should be going in here
+		var/datum/radio_frequency/connected_chann = SSradio.add_object(src, ch_name) //Initialize the connection
+		channels[ch_name] = connected_chann //Store it under an easily findable method
 
 /obj/item/radio/ComponentInitialize()
 	. = ..()
@@ -275,6 +276,8 @@
 		signal.broadcast()
 		return
 
+	var/datum/radio_frequency/send_freq = channels[channel]
+	send_freq.post_signal(src, signal, , signal.levels)
 	// All radios make an attempt to use the subspace system first
 	signal.send_to_receivers()
 

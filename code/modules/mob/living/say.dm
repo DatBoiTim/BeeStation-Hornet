@@ -362,7 +362,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			imp.radio.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 		if(message_mods[RADIO_EXTENSION] == MODE_DEPARTMENT || (message_mods[RADIO_EXTENSION] in imp.radio.channels))
-			imp.radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+			imp.radio.talk_into(src, message, GLOB.radiochannels[message_mods[RADIO_EXTENSION]], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
 	switch(message_mods[RADIO_EXTENSION])

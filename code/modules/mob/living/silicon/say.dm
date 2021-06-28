@@ -41,7 +41,7 @@
 
 	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
 		if(radio)
-			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
+			radio.talk_into(src, message, GLOB.radiochannels[message_mods[RADIO_EXTENSION]], spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
 	return 0
