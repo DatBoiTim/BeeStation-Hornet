@@ -264,9 +264,16 @@
 
 	// Determine the identity information which will be attached to the signal.
 	var/atom/movable/virtualspeaker/speaker = new(null, M, src)
-
+	var/list/datalist = list(
+		"speaker" = speaker,
+		"language" = language,
+		"message" = message,
+		"spans" = spans,
+		"mods" = message_mods,
+		"frequency" = frequency
+	)
 	// Construct the signal
-	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans, message_mods)
+	var/datum/signal/signal = new(datalist)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
 	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE))
@@ -295,7 +302,12 @@
 	send_freq.post_signal(sender, signal)
 
 /obj/item/radio/receive_signal(datum/signal/signal)
-	var/list/receive = get_mobs_in_radio_ranges(src)
+	var/list/sdata = signal.data
+	var/message = copytext_char(sdata["message"], 1, MAX_BROADCAST_LEN)
+	if(!message)
+		return
+
+	var/list/receive = get_mobs_in_radio_ranges(list(src))
 
 	// Cut out mobs with clients who are admins and have radio chatter disabled.
 	for(var/mob/R in receive)
@@ -309,11 +321,14 @@
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
-	var/spans = data["spans"]
-	var/list/message_mods = data["mods"]
+	var/spans = sdata["spans"]
+	var/list/message_mods = sdata["mods"]
+	var/freq = sdata["frequency"]
+	var/atom/movable/virtualspeaker/virt = sdata["speaker"]
+	var/datum/language/L = sdata["language"]
 	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 	for(var/atom/movable/hearer in receive)
-		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods)
+		hearer.Hear(rendered, virt, language, message, freq, spans, message_mods)
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
@@ -325,8 +340,7 @@
 		for(var/S in spans)
 			spans_part = "[spans_part] [S]"
 		spans_part = "[spans_part] ) "
-
-	var/lang_name = data["language"]
+	var/lang_name = L.name
 	var/log_text = "\[[get_radio_name(frequency)]\] [spans_part]\"[message]\" (language: [lang_name])"
 
 	var/mob/source_mob = virt.source
