@@ -22,6 +22,9 @@
 //#define LEGACY_REFERENCE_TRACKING
 #ifdef LEGACY_REFERENCE_TRACKING
 
+///Should we be logging our findings or not
+#define REFERENCE_TRACKING_LOG
+
 ///Use the legacy reference on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -56,7 +59,7 @@
 
 //Update this whenever the byond version is stable so people stop updating to hilariously broken versions
 #define MAX_COMPILER_VERSION 514
-#define MAX_COMPILER_BUILD 1554
+#define MAX_COMPILER_BUILD 1556
 #if DM_VERSION > MAX_COMPILER_VERSION || DM_BUILD > MAX_COMPILER_BUILD
 #warn WARNING: Your BYOND version is over the recommended version (514.1554)! Stability is not guaranteed.
 #endif
